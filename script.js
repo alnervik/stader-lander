@@ -8,6 +8,10 @@ function createTopSection() {
             data.map(country => {
                 console.log("country", country.countryname);
 
+                const countryContainer = document.createElement("div");
+                countryContainer.innerText = country.countryname;
+                root.appendChild(countryContainer);
+
             })
     })
 }
