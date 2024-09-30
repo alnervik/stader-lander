@@ -19,10 +19,11 @@ body {
     color: #ffffff;
 }
 
-.header {
+.top-section {
     display: flex;
     justify-content: center;
-    padding-top: 50px;
+    padding-top: 20px;
     font-size: x-large;
     font-weight: 450;
+    gap: 10px;
 }
