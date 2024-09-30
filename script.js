@@ -15,10 +15,13 @@ function createTopSection() {
                 console.log("country", country.countryname);
                 //Skapa en div-container för varje land
                 const countryContainer = document.createElement("div");
-                countryContainer.innerText = country.countryname;
+                countryContainer.innerText = country.countryname + " - ";
                 topSection.appendChild(countryContainer);
 
             })
+            const visitedCities = document.createElement("div");
+            visitedCities.innerText = "Besökta städer";
+            topSection.appendChild(visitedCities);
     })
 }
 createTopSection();
