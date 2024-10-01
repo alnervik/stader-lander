@@ -1,13 +1,5 @@
 const root = document.getElementById("root");
 
-function createMainSection() {
-    const mainSection = document.createElement('div');
-    mainSection.classList.add('main-section');
-    root.appendChild(mainSection);
-    return mainSection;
-}
-
-
 // Funktion för att skapa top-sectionen
 function createTopSection() {
     //Skapa topsection-div för att lägga länderna inuti
