@@ -28,4 +28,23 @@ body {
     font-weight: 450;
     gap: 10px;
     background-color: #010409;
+    
+}
+.country {
+    cursor: pointer;
+
+}
+
+.main-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+}
+
+.city {
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px;
 }

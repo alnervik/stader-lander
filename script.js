@@ -1,5 +1,13 @@
 const root = document.getElementById("root");
 
+function createMainSection() {
+    const mainSection = document.createElement('div');
+    mainSection.classList.add('main-section');
+    root.appendChild(mainSection);
+    return mainSection;
+}
+
+
 // Funktion för att skapa top-sectionen
 function createTopSection() {
     //Skapa topsection-div för att lägga länderna inuti
@@ -14,6 +22,7 @@ function createTopSection() {
             data.map(country => {
                 //Skapa en div-container för varje land
                 const countryContainer = document.createElement("div");
+                countryContainer.classList.add("country");
                 countryContainer.innerText = country.countryname + " - ";
                 topSection.appendChild(countryContainer);
                 //Lägg till en eventlistener för att visa städerna i det specifika landet
@@ -31,6 +40,9 @@ function createTopSection() {
 
 //Funktion för att visa städerna i en specifik länd
 function showCities(countryId) {
+    const mainSection = document.querySelector('.main-section') || createMainSection();
+    mainSection.innerHTML = '';
+
 
     //Hämta data från stad.json
     fetch("stad.json")
@@ -38,15 +50,20 @@ function showCities(countryId) {
         .then(data => {
             //Använd filter för att hämta städerna som matchar det land som klickas på
             cities = data.filter(city => city.countryid === countryId);
-            //Temporärt så loggar jag för att se så det funkar, innan det ska in i main-section
-            console.log(cities);
+            //För varje stad i cities, skapa en div och lägg till stadens namn
+            cities.map(city => {
+                const cityDiv = document.createElement('div');
+                cityDiv.classList.add('city');
+                cityDiv.innerText = city.stadname;
+                mainSection.appendChild(cityDiv);
+            });
         });
 }
 createTopSection();
 
 function createMainSection() {
-    const mainSection = document.createElement("div");
-    mainSection.classList.add("main-section");
+    const mainSection = document.createElement('div');
+    mainSection.classList.add('main-section');
     root.appendChild(mainSection);
+    return mainSection;
 }
-createMainSection();
