@@ -46,7 +46,16 @@ function showCities(countryId) {
             cities.map(city => {
                 const cityDiv = document.createElement('div');
                 cityDiv.classList.add('city');
-                cityDiv.innerText = city.stadname;
+
+                const cityName = document.createElement('div');
+                cityName.innerText = city.stadname;
+                cityDiv.appendChild(cityName);
+                //Skapar en div, hämtar "population:" och lägger till den i en div
+                const cityPopulation = document.createElement('div');
+                cityPopulation.classList.add('population');
+                cityPopulation.innerText = `Invånare: ${city.population}`;
+                cityDiv.appendChild(cityPopulation);
+                
                 mainSection.appendChild(cityDiv);
             });
         });
