@@ -51,10 +51,16 @@ function showCities(countryId) {
                 cityName.innerText = city.stadname;
                 cityDiv.appendChild(cityName);
                 //Skapar en div, hämtar "population:" och lägger till den i en div
+                //Använder display none för att dölja invånarantal i start.
                 const cityPopulation = document.createElement('div');
                 cityPopulation.classList.add('population');
+                cityPopulation.style.display = 'none';
                 cityPopulation.innerText = `Invånare: ${city.population}`;
                 cityDiv.appendChild(cityPopulation);
+                //Visar invånarantal när staden klickas på och döljer det när staden klickas på igen via 'none'
+                cityDiv.addEventListener('click', () => {
+                    cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
+                });
                 
                 mainSection.appendChild(cityDiv);
             });
