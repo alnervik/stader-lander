@@ -30,11 +30,11 @@ function createTopSection() {
     
 }
 
-//Funktion för att visa städerna i en specifik länd
+//Funktion för att visa städerna i en specifik land
 function showCities(countryId) {
+    //Om main-section inte hittas, kallas funktionen för att skapa den
     const mainSection = document.querySelector('.main-section') || createMainSection();
     mainSection.innerHTML = '';
-
 
     //Hämta data från stad.json
     fetch("stad.json")
@@ -58,8 +58,11 @@ function showCities(countryId) {
                 cityPopulation.innerText = `Invånare: ${city.population}`;
                 cityDiv.appendChild(cityPopulation);
                 //Visar invånarantal när staden klickas på och döljer det när staden klickas på igen via 'none'
-                cityDiv.addEventListener('click', () => {
-                    cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
+                //Använder event.target !== checkbox för att undvika att dölja invånarantalet när checkboxen klickas på
+                cityDiv.addEventListener('click', (event) => {
+                    if (event.target !== checkbox) {
+                        cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
+                    }
                 });
                 
                 const checkbox = document.createElement('input');
@@ -67,7 +70,8 @@ function showCities(countryId) {
                 checkbox.id = `checkbox-${city.id}`;
                 checkbox.classList.add('city-checkbox');
                 cityPopulation.appendChild(checkbox);
-                
+
+
                 mainSection.appendChild(cityDiv);
             });
         });
