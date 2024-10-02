@@ -64,13 +64,23 @@ function showCities(countryId) {
                         cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
                     }
                 });
-                
+                //Skapar en checkbox för att markera staden som besökt
+                //Lägger till .id på checkboxen för att kunna hänvisa till specific stad
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.id = `checkbox-${city.id}`;
                 checkbox.classList.add('city-checkbox');
                 cityPopulation.appendChild(checkbox);
-
+                
+                const label = document.createElement('label');
+                label.htmlFor = `checkbox-${city.id}`;
+                label.innerText = 'Besökt';
+                //Använder div för att placera checkboxen och labelen i samma container
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.classList.add('checkbox-container');
+                checkboxContainer.appendChild(checkbox);
+                checkboxContainer.appendChild(label);
+                cityPopulation.appendChild(checkboxContainer);
 
                 mainSection.appendChild(cityDiv);
             });
