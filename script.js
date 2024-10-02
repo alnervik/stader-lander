@@ -1,5 +1,9 @@
 const root = document.getElementById("root");
 
+// Funktion för att hämta besökta städer från localStorage
+function loadVisitedCities() {
+    return JSON.parse(localStorage.getItem('visitedCities')) || [];
+};
 
 // Funktion för att skapa top-sectionen
 function createTopSection() {
@@ -65,6 +69,7 @@ function showCities(countryId) {
                         cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
                     }
                 });
+
                 //Skapar en checkbox för att markera staden som besökt
                 //Lägger till .id på checkboxen för att kunna hänvisa till specific stad
                 const checkbox = document.createElement('input');
@@ -72,10 +77,25 @@ function showCities(countryId) {
                 checkbox.id = `checkbox-${city.id}`;
                 checkbox.classList.add('city-checkbox');
                 cityPopulation.appendChild(checkbox);
-                
+
+                let visitedCities = loadVisitedCities();
+                checkbox.checked = visitedCities.includes(city.id);
+                checkbox.addEventListener('change', (event) => {
+                    if (event.target.checked) {
+                        if (!visitedCities.includes(city.id)) {
+                            visitedCities.push(city.id);
+                        }
+                    } else {
+                        visitedCities = visitedCities.filter(id => id !== city.id);
+                    }
+                    localStorage.setItem('visitedCities', JSON.stringify(visitedCities));
+                });
+                cityPopulation.appendChild(checkbox);
+
                 const label = document.createElement('label');
                 label.htmlFor = `checkbox-${city.id}`;
                 label.innerText = 'Besökt';
+
                 //Använder div för att placera checkboxen och labelen i samma container
                 const checkboxContainer = document.createElement('div');
                 checkboxContainer.classList.add('checkbox-container');
