@@ -62,6 +62,12 @@ function showCities(countryId) {
                     cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
                 });
                 
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `checkbox-${city.id}`;
+                checkbox.classList.add('city-checkbox');
+                cityPopulation.appendChild(checkbox);
+                
                 mainSection.appendChild(cityDiv);
             });
         });
