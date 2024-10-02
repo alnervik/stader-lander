@@ -60,7 +60,7 @@ function showCities(countryId) {
                 //Visar invånarantal när staden klickas på och döljer det när staden klickas på igen via 'none'
                 //Använder event.target !== checkbox för att undvika att dölja invånarantalet när checkboxen klickas på
                 cityDiv.addEventListener('click', (event) => {
-                    if (event.target !== checkbox) {
+                    if (event.target !== checkboxContainer) {
                         cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
                     }
                 });
