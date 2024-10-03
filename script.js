@@ -30,8 +30,10 @@ function createTopSection() {
             //Skapa en div för att länka till sidan med besökta städer
             const visitedCities = document.createElement("div");
             visitedCities.innerText = "Besökta städer";
+            visitedCities.classList.add("visited-cities");
+            visitedCities.addEventListener("click", showVisitedCities);
             topSection.appendChild(visitedCities);
-    })
+        })
     
 }
 
@@ -68,45 +70,46 @@ function showCities(countryId) {
                     if (!checkboxContainer.contains(event.target)) {
                         cityPopulation.style.display = cityPopulation.style.display === 'none' ? 'block' : 'none';
                     }
-                });
+            });
 
-                //Skapar en checkbox för att markera staden som besökt
-                //Lägger till .id på checkboxen för att kunna hänvisa till specific stad
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = `checkbox-${city.id}`;
-                checkbox.classList.add('city-checkbox');
-                cityPopulation.appendChild(checkbox);
+            //Skapar en checkbox för att markera staden som besökt
+            //Lägger till .id på checkboxen för att kunna hänvisa till specific stad
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `checkbox-${city.id}`;
+            checkbox.classList.add('city-checkbox');
+            cityPopulation.appendChild(checkbox);
 
-                let visitedCities = loadVisitedCities();
-                checkbox.checked = visitedCities.includes(city.id);
-                checkbox.addEventListener('change', (event) => {
-                    if (event.target.checked) {
-                        if (!visitedCities.includes(city.id)) {
-                            visitedCities.push(city.id);
+            let visitedCities = loadVisitedCities();
+            checkbox.checked = visitedCities.includes(city.id);
+            checkbox.addEventListener('change', (event) => {
+                if (event.target.checked) {
+                    if (!visitedCities.includes(city.id)) {
+                        visitedCities.push(city.id);
+                        }} 
+                        else {
+                            visitedCities = visitedCities.filter(id => id !== city.id);
                         }
-                    } else {
-                        visitedCities = visitedCities.filter(id => id !== city.id);
-                    }
-                    localStorage.setItem('visitedCities', JSON.stringify(visitedCities));
-                });
-                cityPopulation.appendChild(checkbox);
+                        localStorage.setItem('visitedCities', JSON.stringify(visitedCities));
+                    });
+            cityPopulation.appendChild(checkbox);
 
-                const label = document.createElement('label');
-                label.htmlFor = `checkbox-${city.id}`;
-                label.innerText = 'Besökt';
+            const label = document.createElement('label');
+            label.htmlFor = `checkbox-${city.id}`;
+            label.innerText = 'Besökt';
 
-                //Använder div för att placera checkboxen och labelen i samma container
-                const checkboxContainer = document.createElement('div');
-                checkboxContainer.classList.add('checkbox-container');
-                checkboxContainer.appendChild(checkbox);
-                checkboxContainer.appendChild(label);
-                cityPopulation.appendChild(checkboxContainer);
+            //Använder div för att placera checkboxen och labelen i samma container
+            const checkboxContainer = document.createElement('div');
+            checkboxContainer.classList.add('checkbox-container');
+            checkboxContainer.appendChild(checkbox);
+            checkboxContainer.appendChild(label);
+            cityPopulation.appendChild(checkboxContainer);
 
-                mainSection.appendChild(cityDiv);
+            mainSection.appendChild(cityDiv);
             });
         });
 }
+
 createTopSection();
 
 function createMainSection() {
@@ -114,4 +117,29 @@ function createMainSection() {
     mainSection.classList.add('main-section');
     root.appendChild(mainSection);
     return mainSection;
+}
+
+//Funktion för att visa besökta städer
+function showVisitedCities() {
+    const mainSection = document.querySelector('.main-section') || createMainSection();
+    mainSection.innerHTML = '';
+    //Kallar på funktionen för att hämta besökta städer
+    const visitedCityIds = loadVisitedCities();
+
+    fetch("stad.json")
+        .then(res => res.json())
+        .then(data => {
+            const visitedCities = data.filter(city => visitedCityIds.includes(city.id));
+            //För varje stad i visitedCities, skapas en div och skickas till main-section
+            visitedCities.map(city => {
+                const cityDiv = document.createElement('div');
+                cityDiv.classList.add('city');
+
+                const cityName = document.createElement('div');
+                cityName.innerText = city.stadname;
+                cityDiv.appendChild(cityName);
+                
+                mainSection.appendChild(cityDiv);
+            });
+        });
 }

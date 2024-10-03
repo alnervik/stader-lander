@@ -31,7 +31,7 @@ body {
     
 }
 
-.country {
+.country, .visited-cities {
     cursor: pointer;
 }
 
