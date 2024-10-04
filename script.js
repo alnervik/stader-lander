@@ -142,8 +142,13 @@ function showVisitedCities() {
                 mainSection.appendChild(cityDiv);
             });
         });
+    const removeButton = document.createElement('button');
+    removeButton.innerText = 'Ta bort besökta städer';
+    removeButton.addEventListener('click', removeVisitedCities);
+    mainSection.appendChild(removeButton);
 }
 
 function removeVisitedCities() {
     localStorage.removeItem('visitedCities');
+    showVisitedCities();
 }
