@@ -1,8 +1,10 @@
 const root = document.getElementById("root");
 
 // Funktion för att hämta besökta städer från localStorage
+//Ändrar från string till number
 function loadVisitedCities() {
-    return JSON.parse(localStorage.getItem('visitedCities')) || [];
+    const visited = JSON.parse(localStorage.getItem('visitedCities')) || [];
+    return visited.map(id => Number(id));
 };
 
 // Funktion för att skapa top-sectionen
@@ -83,15 +85,16 @@ function showCities(countryId) {
             let visitedCities = loadVisitedCities();
             checkbox.checked = visitedCities.includes(city.id);
             checkbox.addEventListener('change', (event) => {
+                let visitedCities = loadVisitedCities();
                 if (event.target.checked) {
                     if (!visitedCities.includes(city.id)) {
                         visitedCities.push(city.id);
-                        }} 
-                        else {
-                            visitedCities = visitedCities.filter(id => id !== city.id);
-                        }
-                        localStorage.setItem('visitedCities', JSON.stringify(visitedCities));
-                    });
+                    }} else {
+                    visitedCities = visitedCities.filter(id => id !== city.id);
+                }
+                localStorage.setItem('visitedCities', JSON.stringify(visitedCities));
+            });
+                    
             cityPopulation.appendChild(checkbox);
 
             const label = document.createElement('label');
