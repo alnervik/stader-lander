@@ -143,3 +143,7 @@ function showVisitedCities() {
             });
         });
 }
+
+function removeVisitedCities() {
+    localStorage.removeItem('visitedCities');
+}
