@@ -130,7 +130,8 @@ function showVisitedCities() {
         .then(res => res.json())
         .then(data => {
             const visitedCities = data.filter(city => visitedCityIds.includes(city.id));
-            //För varje stad i visitedCities, skapas en div och skickas till main-section
+            let totalPopulation = 0;
+            
             visitedCities.map(city => {
                 const cityDiv = document.createElement('div');
                 cityDiv.classList.add('city');
@@ -138,16 +139,30 @@ function showVisitedCities() {
                 const cityName = document.createElement('div');
                 cityName.innerText = city.stadname;
                 cityDiv.appendChild(cityName);
-                
+
+                const cityPopulation = document.createElement('div');
+                cityPopulation.innerText = `Invånare: ${city.population}`;
+                cityDiv.appendChild(cityPopulation);
+
                 mainSection.appendChild(cityDiv);
+
+                totalPopulation += city.population;
             });
+
+            //Skapa div för total befolkning
+            const totalPopulationDiv = document.createElement('div');
+            totalPopulationDiv.classList.add('total-population');
+            totalPopulationDiv.innerText = `Totalt invånare du träffat: ${totalPopulation}`;
+            mainSection.appendChild(totalPopulationDiv);
+
         });
+    //Skapa knapp för att ta bort besökta städer
     const removeButton = document.createElement('button');
     removeButton.innerText = 'Ta bort besökta städer';
     removeButton.addEventListener('click', removeVisitedCities);
     mainSection.appendChild(removeButton);
 }
-
+//Funktion för att rensa besökta städer ur localStorage
 function removeVisitedCities() {
     localStorage.removeItem('visitedCities');
     showVisitedCities();
